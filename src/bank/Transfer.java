@@ -47,18 +47,6 @@ public class Transfer extends Transaction {
     }
 
     /**
-     * Print object to console
-     */
-    public void printObject() {
-        System.out.println("Date: " + date);
-        System.out.println("Description: " + description);
-        System.out.println("Amount: " + amount);
-        System.out.println("Sender: " + sender);
-        System.out.println("Recipient: " + recipient);
-    }
-
-
-    /**
      * Set the amount of the transfer
      *
      * @param amount the amount
@@ -107,5 +95,30 @@ public class Transfer extends Transaction {
     public void setRecipient(String recipient) {
         this.recipient = recipient;
     }
+
+    @Override
+    public double calculate() {
+        return amount;
+    }
+
+    @Override
+    public String toString() {
+        String newLine = System.getProperty("line.separator");
+        return (super.toString() + "Sender: " + sender + newLine + "Recipient: " + recipient + newLine);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        } else {
+            if (obj instanceof Transfer transfer) {
+                return super.equals(transfer) && sender.equals(transfer.sender) && recipient.equals(transfer.recipient);
+            } else {
+                return false;
+            }
+        }
+    }
+
 }
 

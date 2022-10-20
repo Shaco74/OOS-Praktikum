@@ -45,17 +45,6 @@ public class Payment extends Transaction {
     }
 
     /**
-     * Print object to console
-     */
-    public void printObject() {
-        System.out.println("Date: " + date);
-        System.out.println("Description: " + description);
-        System.out.println("Amount: " + amount);
-        System.out.println("Incoming Interest: " + incomingInterest);
-        System.out.println("Outgoing Interest: " + outgoingInterest);
-    }
-
-    /**
      * Get outgoing interest on withdrawals
      *
      * @return the outgoing interest
@@ -115,7 +104,9 @@ public class Payment extends Transaction {
      */
     @Override
     public void setAmount(double amount) {
-        this.amount = amount;
+        if (amount != 0) {
+            this.amount = amount;
+        }
     }
 
     /**
@@ -152,5 +143,35 @@ public class Payment extends Transaction {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public double calculate() {
+        if (amount > 0) {
+            //amount is positive
+            return (amount - (amount * incomingInterest));
+        } else {
+            //amount is negative
+            return (amount + (amount * outgoingInterest));
+        }
+    }
+
+    @Override
+    public String toString() {
+        String newLine = System.getProperty("line.separator");
+        return (super.toString() + "Incoming Interest: " + incomingInterest + newLine + "Outgoing Interest: " + outgoingInterest + newLine);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        } else {
+            if (obj instanceof Payment payment) {
+                return (super.equals(payment) && incomingInterest == payment.incomingInterest && outgoingInterest == payment.outgoingInterest);
+            } else {
+                return false;
+            }
+        }
     }
 }
