@@ -20,18 +20,20 @@ public class Main {
         Transfer t3 = new Transfer(t2);
         t3.setDescription("T3 description");
         t3.setDate("2022-01-03");
+        t3.setSender("T3 sender");
+        t3.setRecipient("T3 recipient");
 
-        System.out.println("-----------------");
-        System.out.println(t3.toString());
-        System.out.println("-----------------");
-        System.out.println(p3.toString());
-        System.out.println("-----------------");
 
-        System.out.println(p3.equals(p2));
-        p2.setAmount(p3.getAmount());
-        p2.setDate(p3.getDate());
-        p2.setDescription(p3.getDescription());
-        System.out.println(p3.equals(p2));
-
+        System.out.println("Copy Test");
+        Transfer t4 = new Transfer(t3);
+        System.out.println("Should be true: " + t4.equals(t3));
+        t4.setDescription("t4 description");
+        System.out.println("Should be false: " + t4.equals(t3));
+        System.out.println("-----------------");
+        System.out.println("Print Test");
+        System.out.println("-----------------");
+        System.out.println(t3);
+        System.out.println(t4);
+        System.out.println("-----------------");
     }
 }

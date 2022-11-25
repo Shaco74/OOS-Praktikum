@@ -96,17 +96,33 @@ public class Transfer extends Transaction {
         this.recipient = recipient;
     }
 
+    /**
+     * Calculates the effective amount
+     *
+     * @return the effective amount
+     */
     @Override
     public double calculate() {
         return amount;
     }
 
+    /**
+     * Converts the object to a printable formatted string
+     *
+     * @return the object string
+     */
     @Override
     public String toString() {
         String newLine = System.getProperty("line.separator");
         return (super.toString() + "Sender: " + sender + newLine + "Recipient: " + recipient + newLine);
     }
 
+    /**
+     * Compares an object to the current object and returns true if they share the same attributes
+     *
+     * @param obj the object to be compared with
+     * @return true if they are equal
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -119,6 +135,5 @@ public class Transfer extends Transaction {
             }
         }
     }
-
 }
 

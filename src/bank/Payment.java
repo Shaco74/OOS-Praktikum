@@ -145,6 +145,11 @@ public class Payment extends Transaction {
         this.description = description;
     }
 
+    /**
+     * Calculates the effective amount with interests applied
+     *
+     * @return the amount with applied interests
+     */
     @Override
     public double calculate() {
         if (amount > 0) {
@@ -156,12 +161,23 @@ public class Payment extends Transaction {
         }
     }
 
+    /**
+     * Converts the object to a printable formatted string
+     *
+     * @return the object string
+     */
     @Override
     public String toString() {
         String newLine = System.getProperty("line.separator");
         return (super.toString() + "Incoming Interest: " + incomingInterest + newLine + "Outgoing Interest: " + outgoingInterest + newLine);
     }
 
+    /**
+     * Compares an object to the current object and returns true if they share the same attributes
+     *
+     * @param obj the object to be compared with
+     * @return true if they are equal
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

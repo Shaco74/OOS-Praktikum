@@ -77,11 +77,22 @@ public abstract class Transaction implements CalculateBill {
      */
     public abstract void setAmount(double amount);
 
+    /**
+     * Converts the object to a printable formatted string
+     *
+     * @return the object string
+     */
     public String toString() {
         String newLine = System.getProperty("line.separator");
         return "Date: " + date + newLine + "Description: " + description + newLine + "Amount: " + amount + newLine + "Calculated amount: " + calculate() + newLine;
     }
 
+    /**
+     * Compares an object to the current object and returns true if they share the same attributes
+     *
+     * @param obj the object to be compared with
+     * @return true if they are equal
+     */
     public boolean equals(Object obj) {
         // If the object is compared with itself then return true
         if (obj == this) {
