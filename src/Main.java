@@ -1,39 +1,91 @@
-import bank.Payment;
-import bank.Transfer;
+import bank.*;
+import bank.exceptions.NumericValueInvalidException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Payment p1 = new Payment("2022-01-01", "P1 description", 100, 0.1, 0.12);
-        Payment p2 = new Payment("2022-01-02", "P2 description", 200);
-        System.out.println(p2.getIncomingInterest());
-        p2.setIncomingInterest(0.05);
-        p2.setOutgoingInterest(0.12);
-        Payment p3 = new Payment(p2);
-        p3.setDescription("P3 description");
-        p3.setDate("2022-01-03");
+        try{
+            PrivateBank bank = new PrivateBank("Meine Bank", 0.1, 0.2);
+            PrivateBankAlt bankAlt = new PrivateBankAlt("Meine BankAlt", 0.1, 0.2);
+
+            List<Transaction> transactions = new ArrayList<>();
+            transactions.add(new IncomingTransfer("01.01.2019", "Gehalt", 2000, "Herr Mustermann", "Hans"));
+            transactions.add(new OutgoingTransfer("01.01.2019", "Einkauf", 200, "Hans", "Rewe"));
+            transactions.add(new Payment("01.01.2019", "Miete", -500, 0.1, 0.2));
+
+            List<Transaction> transactionsAlt = new ArrayList<>();
+            transactionsAlt.add(new Transfer("01.01.2019", "Gehalt", 2000, "Herr Mustermann", "Hans"));
+            transactionsAlt.add(new Transfer("01.01.2019", "Einkauf", 200, "Hans", "Rewe"));
+            transactionsAlt.add(new Payment("01.01.2019", "Miete", -500, 0.1, 0.2));
+
+            bank.createAccount("Hans", transactions);
+            bankAlt.createAccount("Hans", transactionsAlt);
+
+            //Test Contains and add/remove Transaction
+            try{
+                System.out.println("-----------------");
+                System.out.println("Test Contains and add/remove Transaction");
+                IncomingTransfer t = new IncomingTransfer("02.01.2019", "Test", 111, "Herr Mustermann", "Hans");
+                bank.addTransaction("Hans", t);
+                System.out.println(bank.containsTransaction("Hans", t));
+                bank.removeTransaction("Hans", t);
+                System.out.println(!bank.containsTransaction("Hans", t));
+                System.out.println("-----------------");
+            }catch(Exception e){
+                System.out.println(e);
+            }
 
 
-        Transfer t1 = new Transfer("2022-01-01", "T1 description", 100);
-        t1.setSender("T1 sender");
-        t1.setRecipient("T1 recipient");
-        Transfer t2 = new Transfer("2022-01-02", "T2 description", 200, "T2 sender", "T2 recipient");
-        Transfer t3 = new Transfer(t2);
-        t3.setDescription("T3 description");
-        t3.setDate("2022-01-03");
-        t3.setSender("T3 sender");
-        t3.setRecipient("T3 recipient");
+            // Test amount Exception
+            try {
+                Transfer t = new Transfer("01.01.2019", "Gehalt", -2000, "Herr Mustermann", "Hans");
+            } catch (NumericValueInvalidException e) {
+                System.out.println("-----------------");
+                System.out.println("Test amount Exception");
+                System.out.println(e);
+                System.out.println("-----------------");
+
+            }
+            // Test incomingException Exception
+            try {
+                PrivateBank b = new PrivateBank("Meine Bank", -0.1, 0);
+            } catch (NumericValueInvalidException e) {
+                System.out.println("-----------------");
+                System.out.println("Test incomingException Exception");
+                System.out.println(e);
+                System.out.println("-----------------");
+            }
+
+            PrivateBank b = new PrivateBank("Meine Bank", 0.1, 0.2);
+            PrivateBankAlt bAlt = new PrivateBankAlt("Meine Bank", 0.1, 0.2);
+
+            PrivateBank bankCopy = new PrivateBank(b);
+            PrivateBankAlt bankAltCopy = new PrivateBankAlt(bAlt);
+
+            System.out.println("-----------------");
+            System.out.println("Account Balance Test");
+            System.out.println(bank.getAccountBalance("Hans"));
+            System.out.println(bankAlt.getAccountBalance("Hans"));
+            System.out.println("-----------------");
+
+            System.out.println("Equals/Copy Test");
+            System.out.println(bankCopy.equals(b));
+            System.out.println(bankAltCopy.equals(bAlt));
+            bankAlt.setOutgoingInterest(0.3);
+            System.out.println(bankAltCopy.equals(bAlt));
+
+            System.out.println("-----------------");
+            System.out.println("Print Test");
+            System.out.println("-----------------");
+
+            System.out.println(bank);
+        }catch (Exception e){
+            System.out.println(e);
+            System.out.println(e.getMessage());
+        }
 
 
-        System.out.println("Copy Test");
-        Transfer t4 = new Transfer(t3);
-        System.out.println("Should be true: " + t4.equals(t3));
-        t4.setDescription("t4 description");
-        System.out.println("Should be false: " + t4.equals(t3));
-        System.out.println("-----------------");
-        System.out.println("Print Test");
-        System.out.println("-----------------");
-        System.out.println(t3);
-        System.out.println(t4);
-        System.out.println("-----------------");
     }
 }

@@ -1,5 +1,7 @@
 package bank;
 
+import bank.exceptions.NumericValueInvalidException;
+
 /**
  * Abstract transaction class representing the general transactions
  */
@@ -19,7 +21,7 @@ public abstract class Transaction implements CalculateBill {
      * @param date        the date
      * @param description the description
      */
-    public Transaction(String date, String description, double amount) {
+    public Transaction(String date, String description, double amount) throws NumericValueInvalidException {
         this.date = date;
         this.description = description;
         setAmount(amount);
@@ -75,7 +77,7 @@ public abstract class Transaction implements CalculateBill {
      *
      * @param amount the amount
      */
-    public abstract void setAmount(double amount);
+    public abstract void setAmount(double amount) throws NumericValueInvalidException;
 
     /**
      * Converts the object to a printable formatted string

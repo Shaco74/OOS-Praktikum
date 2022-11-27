@@ -1,5 +1,7 @@
 package bank;
 
+import bank.exceptions.NumericValueInvalidException;
+
 /**
  * Payment objects are used to represent payments made by customers
  */
@@ -17,7 +19,7 @@ public class Payment extends Transaction {
      *
      * @param payment the payment object to copy from
      */
-    public Payment(Payment payment) {
+    public Payment(Payment payment) throws NumericValueInvalidException {
         this(payment.date, payment.description, payment.getAmount(), payment.getIncomingInterest(), payment.getOutgoingInterest());
     }
 
@@ -31,7 +33,7 @@ public class Payment extends Transaction {
      * @param incomingInterest the incoming interest on deposits
      * @param outgoingInterest the outgoing interest on withdrawals
      */
-    public Payment(String date, String description, double amount, double incomingInterest, double outgoingInterest) {
+    public Payment(String date, String description, double amount, double incomingInterest, double outgoingInterest) throws NumericValueInvalidException {
         this(date, description, amount);
         setIncomingInterest(incomingInterest);
         setOutgoingInterest(outgoingInterest);
@@ -39,8 +41,9 @@ public class Payment extends Transaction {
 
     /**
      * Instantiate a new payment
+     * @throws NumericValueInvalidException if the amount is 0
      */
-    public Payment(String date, String description, double amount) {
+    public Payment(String date, String description, double amount) throws NumericValueInvalidException {
         super(date, description, amount);
     }
 
@@ -57,11 +60,11 @@ public class Payment extends Transaction {
      * Set outgoing interest on withdrawals
      *
      * @param outgoingInterest the outgoing interest
+     * @throws NumericValueInvalidException if the interest is not between 0 and 1
      */
-    public void setOutgoingInterest(double outgoingInterest) {
+    public void setOutgoingInterest(double outgoingInterest) throws NumericValueInvalidException {
         if (outgoingInterest < 0 || outgoingInterest > 1) {
-            System.out.println("Error: Negative Input for outgoing interest: Withdrawal)!");
-            return;
+            throw new NumericValueInvalidException("Error: Negative Input for outgoing interest: Withdrawal!");
         }
         this.outgoingInterest = outgoingInterest;
     }
@@ -79,10 +82,12 @@ public class Payment extends Transaction {
      * Set incoming interest on deposits
      *
      * @param incomingInterest the incoming interest
+     * @throws NumericValueInvalidException if the interest is not between 0 and 1
      */
-    public void setIncomingInterest(double incomingInterest) {
+    public void setIncomingInterest(double incomingInterest) throws NumericValueInvalidException {
         if (incomingInterest < 0 || incomingInterest > 1) {
-            System.out.println("Error: Negative Input for incoming interest: Deposit)!");
+            throw new NumericValueInvalidException("Error: Negative Input for incoming interest: Deposit)!");
+
         } else {
             this.incomingInterest = incomingInterest;
         }
@@ -101,11 +106,14 @@ public class Payment extends Transaction {
      * Set amount of the payment
      *
      * @param amount the amount
+     * @throws NumericValueInvalidException if the amount is 0
      */
     @Override
-    public void setAmount(double amount) {
+    public void setAmount(double amount) throws NumericValueInvalidException {
         if (amount != 0) {
             this.amount = amount;
+        }else{
+            throw new NumericValueInvalidException("Error: 0 Input for Payment amount!");
         }
     }
 

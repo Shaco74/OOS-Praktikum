@@ -1,5 +1,7 @@
 package bank;
 
+import bank.exceptions.NumericValueInvalidException;
+
 /**
  * Transfer objects are used to represent transfers between accounts
  */
@@ -15,8 +17,9 @@ public class Transfer extends Transaction {
      * Instantiates a new transfer by copying another transfer object
      *
      * @param transfer the transfer object to copy from
+     * @throws NumericValueInvalidException if the amount is negative
      */
-    public Transfer(Transfer transfer) {
+    public Transfer(Transfer transfer) throws NumericValueInvalidException {
         this(transfer.date, transfer.description, transfer.getAmount(), transfer.sender, transfer.recipient);
     }
 
@@ -26,8 +29,9 @@ public class Transfer extends Transaction {
      * @param date        the date
      * @param description the description
      * @param amount      the amount
+     * @throws NumericValueInvalidException if the amount is negative
      */
-    public Transfer(String date, String description, double amount) {
+    public Transfer(String date, String description, double amount) throws NumericValueInvalidException {
         super(date, description, amount);
     }
 
@@ -39,8 +43,9 @@ public class Transfer extends Transaction {
      * @param amount      the amount
      * @param sender      the sender
      * @param recipient   the recipient
+     * @throws NumericValueInvalidException if the amount is negative
      */
-    public Transfer(String date, String description, double amount, String sender, String recipient) {
+    public Transfer(String date, String description, double amount, String sender, String recipient) throws NumericValueInvalidException {
         this(date, description, amount);
         this.sender = sender;
         this.recipient = recipient;
@@ -50,11 +55,12 @@ public class Transfer extends Transaction {
      * Set the amount of the transfer
      *
      * @param amount the amount
+     * @throws NumericValueInvalidException if the amount is negative
      */
     @Override
-    public void setAmount(double amount) {
+    public void setAmount(double amount) throws NumericValueInvalidException {
         if (amount < 0) {
-            System.out.println("Error: Negative Input for Transfer amount!");
+            throw new NumericValueInvalidException("Error: Negative Input for Transfer amount!");
         } else {
             this.amount = amount;
         }
