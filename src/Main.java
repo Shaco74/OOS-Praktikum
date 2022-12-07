@@ -7,13 +7,13 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         try{
-            PrivateBank bank = new PrivateBank("Meine Bank", 0.1, 0.2);
-            PrivateBankAlt bankAlt = new PrivateBankAlt("Meine BankAlt", 0.1, 0.2);
+            PrivateBank bank = new PrivateBank("Meine Bank", 0.2, 0.2);
+            PrivateBankAlt bankAlt = new PrivateBankAlt("Meine BankAlt", 0.2, 0.2);
 
             List<Transaction> transactions = new ArrayList<>();
             transactions.add(new IncomingTransfer("01.01.2019", "Gehalt", 2000, "Herr Mustermann", "Hans"));
             transactions.add(new OutgoingTransfer("01.01.2019", "Einkauf", 200, "Hans", "Rewe"));
-            transactions.add(new Payment("01.01.2019", "Miete", -500, 0.1, 0.2));
+            transactions.add(new Payment("01.01.2019", "Miete", -500, 0.5, 0.5));
 
             List<Transaction> transactionsAlt = new ArrayList<>();
             transactionsAlt.add(new Transfer("01.01.2019", "Gehalt", 2000, "Herr Mustermann", "Hans"));
@@ -50,7 +50,7 @@ public class Main {
             }
             // Test incomingException Exception
             try {
-                PrivateBank b = new PrivateBank("Meine Bank", -0.1, 0);
+                PrivateBank b = new PrivateBank("Meine Bank", 0.3, 0.3);
             } catch (NumericValueInvalidException e) {
                 System.out.println("-----------------");
                 System.out.println("Test incomingException Exception");
