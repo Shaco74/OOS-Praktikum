@@ -1,7 +1,10 @@
 package bank;
 
 import bank.exceptions.*;
+import com.google.gson.*;
+import com.google.gson.internal.LinkedTreeMap;
 
+import java.io.*;
 import java.util.*;
 
 public class PrivateBank implements Bank {
@@ -16,38 +19,20 @@ public class PrivateBank implements Bank {
     private String name;
     private double incomingInterest;
     private double outgoingInterest;
+    private String directoryName;
 
-
-    /**
-     * Constructor for the PrivateBank class
-     *
-     * @param name             The name of the bank
-     * @param incomingInterest The interest on deposits
-     * @param outgoingInterest The interest on withdrawals
-     * @throws NumericValueInvalidException If the interest is not between 0 and 1
-     */
     public PrivateBank(String name, double incomingInterest, double outgoingInterest) throws NumericValueInvalidException {
         this.name = name;
         setIncomingInterest(incomingInterest);
         setOutgoingInterest(outgoingInterest);
     }
 
-    /**
-     * @param bank a bank Object to copy from
-     * @throws NumericValueInvalidException if the interest is not between 0 and 1
-     */
     public PrivateBank(PrivateBank bank) throws NumericValueInvalidException {
         this(bank.name, bank.incomingInterest, bank.outgoingInterest);
         this.accountsToTransactions = new HashMap<String, List<Transaction>>(bank.accountsToTransactions);
     }
 
 
-    /**
-     * Adds an account to the bank.
-     *
-     * @param account the account to be added
-     * @throws AccountAlreadyExistsException if the account already exists
-     */
     @Override
     public void createAccount(String account) throws AccountAlreadyExistsException {
         if (accountsToTransactions.putIfAbsent(account, null) != null) {
@@ -55,16 +40,7 @@ public class PrivateBank implements Bank {
         }
     }
 
-    /**
-     * Adds an account (with specified transactions) to the bank.
-     * Important: duplicate transactions must not be added to the account!
-     *
-     * @param account      the account to be added
-     * @param transactions a list of already existing transactions which should be added to the newly created account
-     * @throws AccountAlreadyExistsException    if the account already exists
-     * @throws TransactionAlreadyExistException if the transaction already exists
-     * @throws TransactionAttributeException    if the validation check for certain attributes fail
-     */
+
     @Override
     public void createAccount(String account, List<Transaction> transactions) throws AccountAlreadyExistsException, TransactionAlreadyExistException, TransactionAttributeException, NumericValueInvalidException {
         if (accountsToTransactions.containsKey(account)) {
@@ -85,15 +61,6 @@ public class PrivateBank implements Bank {
         }
     }
 
-    /**
-     * Adds a transaction to an already existing account.
-     *
-     * @param account     the account to which the transaction is added
-     * @param transaction the transaction which should be added to the specified account
-     * @throws TransactionAlreadyExistException if the transaction already exists
-     * @throws AccountDoesNotExistException     if the specified account does not exist
-     * @throws TransactionAttributeException    if the validation check for certain attributes fail
-     */
     @Override
     public void addTransaction(String account, Transaction transaction) throws TransactionAlreadyExistException, AccountDoesNotExistException, TransactionAttributeException, NumericValueInvalidException {
         if (!accountsToTransactions.containsKey(account)) {
@@ -116,15 +83,6 @@ public class PrivateBank implements Bank {
         }
     }
 
-    /**
-     * Removes a transaction from an account. If the transaction does not exist, an exception is
-     * thrown.
-     *
-     * @param account     the account from which the transaction is removed
-     * @param transaction the transaction which is removed from the specified account
-     * @throws AccountDoesNotExistException     if the specified account does not exist
-     * @throws TransactionDoesNotExistException if the transaction cannot be found
-     */
     @Override
     public void removeTransaction(String account, Transaction transaction) throws AccountDoesNotExistException, TransactionDoesNotExistException {
         if (accountsToTransactions.get(account) == null) {
@@ -136,23 +94,13 @@ public class PrivateBank implements Bank {
         accountsToTransactions.get(account).remove(transaction);
     }
 
-    /**
-     * Checks whether the specified transaction for a given account exists.
-     *
-     * @param account     the account from which the transaction is checked
-     * @param transaction the transaction to search/look for
-     */
+
     @Override
     public boolean containsTransaction(String account, Transaction transaction) {
         return accountsToTransactions.get(account).contains(transaction);
     }
 
-    /**
-     * Calculates and returns the current account balance.
-     *
-     * @param account the selected account
-     * @return the current account balance
-     */
+
     @Override
     public double getAccountBalance(String account) {
         double balance = 0;
@@ -162,25 +110,13 @@ public class PrivateBank implements Bank {
         return balance;
     }
 
-    /**
-     * Returns a list of transactions for an account.
-     *
-     * @param account the selected account
-     * @return the list of all transactions for the specified account
-     */
+
     @Override
     public List<Transaction> getTransactions(String account) {
         return accountsToTransactions.get(account);
     }
 
-    /**
-     * Returns a sorted list (-> calculated amounts) of transactions for a specific account. Sorts the list either in ascending or descending order
-     * (or empty).
-     *
-     * @param account the selected account
-     * @param asc     selects if the transaction list is sorted in ascending or descending order
-     * @return the sorted list of all transactions for the specified account
-     */
+
     @Override
     public List<Transaction> getTransactionsSorted(String account, boolean asc) {
         List<Transaction> transactions = getTransactions(account);
@@ -192,13 +128,7 @@ public class PrivateBank implements Bank {
         return transactions;
     }
 
-    /**
-     * Returns a list of either positive or negative transactions (-> calculated amounts).
-     *
-     * @param account  the selected account
-     * @param positive selects if positive or negative transactions are listed
-     * @return the list of all transactions by type
-     */
+
     @Override
     public List<Transaction> getTransactionsByType(String account, boolean positive) {
         List<Transaction> transactions = getTransactions(account);
@@ -249,7 +179,70 @@ public class PrivateBank implements Bank {
                 accountsToTransactions.equals(bank.accountsToTransactions));
     }
 
-//region Getters and Setters
+
+
+
+    @Override
+    public void writeAccount(String account) throws IOException {
+        JsonSerializerImpl serializer = new JsonSerializerImpl();
+        List<String> list = new ArrayList<>();
+        for (Transaction transaction : accountsToTransactions.get(account)) {
+            list.add(serializer.serialize(transaction));
+        }
+
+        File file = new File("persist/"+directoryName+"/Konto_"+account+".json");
+        file.getParentFile().mkdirs();
+        FileWriter writer = new FileWriter(file);
+        writer.append(list.toString());
+        writer.close();
+    }
+
+    @Override
+    public void readAccounts() {
+        final File folder = new File("persist/"+directoryName+"/");
+        for (final File fileEntry : folder.listFiles()) {
+            String accountOwner = fileEntry.getName();
+            accountOwner = accountOwner.substring(accountOwner.indexOf("_") + 1);
+            accountOwner = accountOwner.substring(0, accountOwner.indexOf("."));
+
+            try (FileReader fr = new FileReader(fileEntry)) {
+                char[] chars = new char[(int) fileEntry.length()];
+                fr.read(chars);
+
+                String fileContent = new String(chars);
+
+                List<LinkedTreeMap> transactionsJson = new Gson().fromJson(fileContent, ArrayList.class);
+                List<Transaction> transactions = new ArrayList<>();
+
+
+                for (LinkedTreeMap transaction : transactionsJson) {
+                    String CLASSNAME = transaction.get("CLASSNAME").toString();
+                    Object INSTANCE = transaction.get("INSTANCE");
+
+                    JsonDeserializerImpl deserializer = new JsonDeserializerImpl();
+                    Gson gson = new Gson();
+                    Transaction t = (Transaction) deserializer.deserialize(gson.toJson(transaction));
+                    transactions.add(t );
+                }
+
+                createAccount(accountOwner, transactions);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            } catch (TransactionAlreadyExistException e) {
+                throw new RuntimeException(e);
+            } catch (NumericValueInvalidException e) {
+                throw new RuntimeException(e);
+            } catch (AccountAlreadyExistsException e) {
+                throw new RuntimeException(e);
+            } catch (TransactionAttributeException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+
+    //region Getters and Setters
 
     /**
      * Get outgoing interest on withdrawals
@@ -293,7 +286,26 @@ public class PrivateBank implements Bank {
             this.incomingInterest = incomingInterest;
         }
     }
-//endregion
+
+    /**
+     * Set the directory name to save/persist files to
+     *
+     * @param the directory name
+     */
+    public String getDirectoryName() {
+        return directoryName;
+    }
+
+    /**
+     * Get the directory name to save/persist files to
+     *
+     * @return the directory name
+     */
+    public void setDirectoryName(String directoryName) {
+        this.directoryName = directoryName;
+    }
+
+    //endregion
 
 }
 

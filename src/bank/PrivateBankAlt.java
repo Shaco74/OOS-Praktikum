@@ -2,6 +2,7 @@ package bank;
 
 import bank.exceptions.*;
 
+import java.io.IOException;
 import java.util.*;
 
 public class PrivateBankAlt implements Bank {
@@ -224,6 +225,21 @@ public class PrivateBankAlt implements Bank {
             }
         }
         return transactionsByType;
+    }
+
+    @Override
+    public void writeAccount(String account) throws IOException {
+        JsonSerializerImpl serializer = new JsonSerializerImpl();
+        List<String> list = new ArrayList<>();
+        for (Transaction transaction : accountsToTransactions.get(account)) {
+            list.add(serializer.serialize(transaction));
+        }
+        System.out.println(list);
+    }
+
+    @Override
+    public void readAccounts() {
+
     }
 
     @Override

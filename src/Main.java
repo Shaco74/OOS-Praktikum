@@ -1,12 +1,13 @@
 import bank.*;
 import bank.exceptions.NumericValueInvalidException;
+import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        try{
+        try {
             PrivateBank bank = new PrivateBank("Meine Bank", 0.2, 0.2);
             PrivateBankAlt bankAlt = new PrivateBankAlt("Meine BankAlt", 0.2, 0.2);
 
@@ -24,7 +25,7 @@ public class Main {
             bankAlt.createAccount("Hans", transactionsAlt);
 
             //Test Contains and add/remove Transaction
-            try{
+            try {
                 System.out.println("-----------------");
                 System.out.println("Test Contains and add/remove Transaction");
                 IncomingTransfer t = new IncomingTransfer("02.01.2019", "Test", 111, "Herr Mustermann", "Hans");
@@ -33,7 +34,7 @@ public class Main {
                 bank.removeTransaction("Hans", t);
                 System.out.println(!bank.containsTransaction("Hans", t));
                 System.out.println("-----------------");
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println(e);
             }
 
@@ -81,11 +82,52 @@ public class Main {
             System.out.println("-----------------");
 
             System.out.println(bank);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
             System.out.println(e.getMessage());
         }
 
+        try {
+
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println("GSON TEST");
+            IncomingTransfer t = new IncomingTransfer("02.01.2019", "Test", 111, "Herr Mustermann", "Hans");
+
+            JsonSerializerImpl serializer = new JsonSerializerImpl();
+
+            //System.out.println(serializer.serialize(t));
+
+            JsonDeserializerImpl<IncomingTransfer> deserializer = new JsonDeserializerImpl<IncomingTransfer>();
+
+            IncomingTransfer iT = deserializer.deserialize(serializer.serialize(t));
+
+            PrivateBank bank = new PrivateBank("Meine Bank", 0.2, 0.2);
+
+            /*
+            List<Transaction> transactions = new ArrayList<>();
+            transactions.add(new IncomingTransfer("01.01.2019", "Gehalt", 2000, "Herr Mustermann", "Hans"));
+            transactions.add(new OutgoingTransfer("01.01.2019", "Einkauf", 200, "Hans", "Rewe"));
+            transactions.add(new Payment("01.01.2019", "Miete", -500, 0.5, 0.5));
+            bank.createAccount("Hans", transactions);
+
+            List<Transaction> transactions2 = new ArrayList<>();
+            transactions2.add(new IncomingTransfer("01.01.2019", "Gehalt", 2000, "Herr Mustermann", "Hans"));
+            transactions2.add(new OutgoingTransfer("01.01.2019", "Einkauf", 200, "Hans", "Rewe"));
+            transactions2.add(new Payment("01.01.2019", "Miete", -500, 0.5, 0.5));
+            bank.createAccount("Anna", transactions2);
+*/
+
+            bank.setDirectoryName("test22");
+            bank.readAccounts();
+            bank.writeAccount("Hans");
+            bank.writeAccount("Anna");
+
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
     }
 }

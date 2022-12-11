@@ -1,6 +1,8 @@
 package bank;
 
 import bank.exceptions.*;
+
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -96,4 +98,8 @@ public interface Bank {
      * @return the list of all transactions by type
      */
     List<Transaction> getTransactionsByType(String account, boolean positive);
+
+    void writeAccount(String account) throws IOException;
+
+    void readAccounts();
 }
