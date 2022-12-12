@@ -1,5 +1,5 @@
-package bank;
-
+import bank.IncomingTransfer;
+import bank.OutgoingTransfer;
 import bank.exceptions.NumericValueInvalidException;
 import org.junit.jupiter.api.Test;
 
@@ -50,10 +50,6 @@ public class TransferTest {
     public void stringTest() throws NumericValueInvalidException {
         IncomingTransfer t1 = new IncomingTransfer("01.01.2019", "Gehalt", 2000, "Ralf", "Lisa");
         OutgoingTransfer t2 = new OutgoingTransfer("01.01.2019", "Gehalt", 2000, "Lisa", "Ralf");
-
-        System.out.println(t1.toString());
-        System.out.println(t2.toString());
-
 
         String testData1 = """
                 Date: 01.01.2019

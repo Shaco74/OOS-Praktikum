@@ -4,8 +4,10 @@ import bank.exceptions.*;
 import com.google.gson.*;
 import com.google.gson.internal.LinkedTreeMap;
 
-import java.io.*;
-import java.sql.Array;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class PrivateBank implements Bank {
@@ -36,8 +38,10 @@ public class PrivateBank implements Bank {
 
     @Override
     public void createAccount(String account) throws AccountAlreadyExistsException {
-        if (accountsToTransactions.putIfAbsent(account, null) != null) {
+        if (accountsToTransactions.containsKey(account)) {
             throw new AccountAlreadyExistsException();
+        }else {
+            accountsToTransactions.put(account, new ArrayList<Transaction>());
         }
     }
 

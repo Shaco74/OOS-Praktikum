@@ -1,8 +1,12 @@
-package bank;
-
+import bank.IncomingTransfer;
+import bank.OutgoingTransfer;
+import bank.PrivateBank;
+import bank.Transaction;
 import bank.exceptions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,8 +57,13 @@ public class PrivateBankTest {
 
     @Test
     public void addTransactionTest() throws AccountAlreadyExistsException, NumericValueInvalidException, TransactionAlreadyExistException, AccountDoesNotExistException, TransactionAttributeException {
-        bank.createAccount("Lisa");
-        bank.addTransaction("Lisa", new IncomingTransfer("01.01.2019", "Gehalt", 2000, "Herr Mustermann", "Lisa"));
+
+        List<Transaction> l = new ArrayList<>();
+        l.add(new IncomingTransfer("01.01.2019", "Gehalt", 2000, "Herr Mustermann", "Lisa"));
+        l.add(new OutgoingTransfer("01.01.2019", "Gehalt", 2000, "Lisa", "Frank"));
+        bank.createAccount("Lisa",l);
+        assertTrue(bank.containsTransaction("Lisa",l.get(0)));
+        assertEquals(2, bank.getTransactions("Lisa").size());
     }
 
     @Test
@@ -162,9 +171,18 @@ public class PrivateBankTest {
         bank.writeAccount("Anna");
 
         assertFalse(bank.getTransactions("Hans").isEmpty());
-
-
     }
 
 
+    @ParameterizedTest
+    @ValueSource(strings = {"Anna", "Frank"})
+    public void paramterizedTest(String pName){
+        assertDoesNotThrow(() -> bank.createAccount(pName));
+    }
+
+    @Test
+    public void exceptionTest() throws AccountAlreadyExistsException {
+        bank.createAccount("Hans");
+        assertThrows(AccountAlreadyExistsException.class, () -> bank.createAccount("Hans"));
+    }
 }

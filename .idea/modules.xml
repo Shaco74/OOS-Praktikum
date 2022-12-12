@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/OOS-P4.iml" filepath="$PROJECT_DIR$/OOS-P4.iml" />
       <module fileurl="file://$PROJECT_DIR$/OOS-Prak.iml" filepath="$PROJECT_DIR$/OOS-Prak.iml" />
     </modules>
   </component>
