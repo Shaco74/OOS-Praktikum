@@ -5,6 +5,7 @@ import com.google.gson.*;
 import com.google.gson.internal.LinkedTreeMap;
 
 import java.io.*;
+import java.sql.Array;
 import java.util.*;
 
 public class PrivateBank implements Bank {
@@ -66,7 +67,7 @@ public class PrivateBank implements Bank {
         if (!accountsToTransactions.containsKey(account)) {
             throw new AccountDoesNotExistException();
         }
-        if (accountsToTransactions.get(account).contains(transaction)) {
+        if (accountsToTransactions.get(account) != null && accountsToTransactions.get(account).contains(transaction)) {
             throw new TransactionAlreadyExistException();
         }
 
@@ -79,7 +80,14 @@ public class PrivateBank implements Bank {
             ((Payment) transaction).setOutgoingInterest(this.outgoingInterest);
             accountsToTransactions.get(account).add(transaction);
         } else if (transaction instanceof Transfer transfer) {
-            accountsToTransactions.get(account).add(transaction);
+            accountsToTransactions.get(account);
+            if(accountsToTransactions.get(account) == null){
+                ArrayList<Transaction> transactions = new ArrayList<>();
+                transactions.add(transaction);
+                accountsToTransactions.put(account, new ArrayList<>(transactions));
+            }else{
+                accountsToTransactions.get(account).add(transaction);
+            }
         }
     }
 
@@ -135,13 +143,10 @@ public class PrivateBank implements Bank {
         List<Transaction> transactionsByType = new ArrayList<>();
 
         for (Transaction transaction : transactions) {
-            // all transactions are positive
-            if (transaction instanceof Transfer && positive) {
-                transactionsByType.add(transaction);
-            }
 
             if (positive && transaction.calculate() > 0) {
                 transactionsByType.add(transaction);
+
             } else if (!positive && transaction.calculate() < 0) {
                 transactionsByType.add(transaction);
             }
@@ -162,7 +167,11 @@ public class PrivateBank implements Bank {
         for (String key : map.keySet()) {
             mapAsString.append(key).append("=").append(newLine).append(map.get(key));
         }
-        mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
+        if(map.size() > 0){
+            mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
+        }else{
+            mapAsString.append("}");
+        }
         return mapAsString.toString();
     }
 

@@ -121,6 +121,8 @@ public class Main {
 
             bank.setDirectoryName("test22");
             bank.readAccounts();
+            bank.setDirectoryName("test_12012022");
+
             bank.writeAccount("Hans");
             bank.writeAccount("Anna");
 
