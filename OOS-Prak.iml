@@ -7,18 +7,39 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/.idea/libraries" />
+      <excludeFolder url="file://$MODULE_DIR$/persist/test_Prak0efcb0b4-6454-490f-bc52-4bcc675876db" />
+      <excludeFolder url="file://$MODULE_DIR$/persist/test_Prak4b8d0da7-83b4-4fff-9357-17f79f312871" />
+      <excludeFolder url="file://$MODULE_DIR$/persist/test_Prak5bcd8799-3134-4dfc-bfe9-f9d72771f8ec" />
+      <excludeFolder url="file://$MODULE_DIR$/persist/test_Prak8a69a15e-afc6-43fa-a752-626cce21accc" />
+      <excludeFolder url="file://$MODULE_DIR$/persist/test_Prak8eb6e6fd-96c6-4c54-928f-ead821aba5e1" />
+      <excludeFolder url="file://$MODULE_DIR$/persist/test_Prak12a1b344-18ba-4c7a-86d2-cb6ffe12d3b8" />
+      <excludeFolder url="file://$MODULE_DIR$/persist/test_Prakacd1b7b3-e8be-4525-8791-f3f1a55702a3" />
+      <excludeFolder url="file://$MODULE_DIR$/persist/test_Prakb0d7ad32-ae87-4ae9-9ea7-4d97028308eb" />
+      <excludeFolder url="file://$MODULE_DIR$/persist/test_Prakb1440b7a-95e3-46b0-9eaa-e4692abdfab3" />
+      <excludeFolder url="file://$MODULE_DIR$/persist/test_Prakc93e1c79-f328-4384-a5de-fa390de9cb3a" />
+      <excludeFolder url="file://$MODULE_DIR$/persist/test_Prakd7160550-a452-4f24-a481-d75402a86013" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
+      <excludeFolder url="file://$MODULE_DIR$/persist/fixtures" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter:5.9.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.9.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.9.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter:5.8.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.8.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.2.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.8.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apiguardian:apiguardian-api:1.1.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-params:5.8.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.8.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.8.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.10" level="project" />
-    <orderEntry type="library" name="Maven: org.junit.jupiter:junit-jupiter-api:5.9.1" level="project" />
-    <orderEntry type="library" name="Maven: org.opentest4j:opentest4j:1.2.0" level="project" />
-    <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-commons:1.9.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apiguardian:apiguardian-api:1.1.2" level="project" />
-    <orderEntry type="library" name="Maven: org.junit.jupiter:junit-jupiter-params:5.9.1" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:mac-aarch64:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:mac-aarch64:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:mac-aarch64:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:mac-aarch64:19" level="project" />
   </component>
 </module>

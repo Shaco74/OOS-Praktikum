@@ -170,7 +170,7 @@ public class PrivateBankTest {
 
     @Test
     public void WriteReadTest() throws IOException {
-        bank.setDirectoryName("test22");
+        bank.setDirectoryName("fixtures");
         bank.readAccounts();
         UUID uuid = UUID.randomUUID();
         bank.setDirectoryName("test_Prak"+uuid.toString());

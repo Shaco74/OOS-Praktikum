@@ -3,8 +3,6 @@
 out/
 .idea/
 
-persist
-persist/
-persist/*
-persist/**
+/persist/*
+!/persist/fixtures/
 
