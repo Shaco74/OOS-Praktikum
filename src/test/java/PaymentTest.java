@@ -2,6 +2,8 @@ import bank.Payment;
 import bank.exceptions.NumericValueInvalidException;
 import org.junit.jupiter.api.Test;
 
+import javax.security.sasl.Sasl;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -49,5 +51,12 @@ public class PaymentTest {
                 """;
 
         assertEquals(testData, p1.toString());
+        assertThrows(
+                NumericValueInvalidException.class,
+                () -> new Payment("01.01.2018", "Gehalt", 0)
+        );
+
+
+
     }
 }

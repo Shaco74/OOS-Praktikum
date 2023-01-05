@@ -114,8 +114,11 @@ public class PrivateBank implements Bank {
 
 
     @Override
-    public double getAccountBalance(String account) {
+    public double getAccountBalance(String account) throws AccountDoesNotExistException {
         double balance = 0;
+        if(!accountsToTransactions.containsKey(account)){
+            throw new AccountDoesNotExistException();
+        }
         for (Transaction transaction : accountsToTransactions.get(account)) {
                 balance += transaction.calculate();
         }
@@ -131,12 +134,13 @@ public class PrivateBank implements Bank {
 
     @Override
     public List<Transaction> getTransactionsSorted(String account, boolean asc) {
-        List<Transaction> transactions = getTransactions(account);
-        transactions.sort(Comparator.comparing(Transaction::calculate));
+        List<Transaction> transactions = new ArrayList<>(getTransactions(account));
+        transactions.sort(Comparator.comparing(t -> String.valueOf(t.calculate())));
 
         if (!asc) {
             Collections.reverse(transactions);
         }
+
         return transactions;
     }
 
