@@ -19,8 +19,8 @@
       <excludeFolder url="file://$MODULE_DIR$/persist/test_Prakb1440b7a-95e3-46b0-9eaa-e4692abdfab3" />
       <excludeFolder url="file://$MODULE_DIR$/persist/test_Prakc93e1c79-f328-4384-a5de-fa390de9cb3a" />
       <excludeFolder url="file://$MODULE_DIR$/persist/test_Prakd7160550-a452-4f24-a481-d75402a86013" />
-      <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/persist/fixtures" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -34,12 +34,12 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.8.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.10" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:19" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:mac-aarch64:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:19" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:19" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:mac-aarch64:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:19" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:19" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:mac-aarch64:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:19" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:19" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:mac-aarch64:19" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:19" level="project" />
   </component>
 </module>

@@ -16,8 +16,6 @@ public class Main {
             transactions.add(new Payment("01.01.2019", "Miete", -500, 0.5, 0.5));
 
             List<Transaction> transactionsAlt = new ArrayList<>();
-            transactionsAlt.add(new Transfer("01.01.2019", "Gehalt", 2000, "Herr Mustermann", "Hans"));
-            transactionsAlt.add(new Transfer("01.01.2019", "Einkauf", 200, "Hans", "Rewe"));
             transactionsAlt.add(new Payment("01.01.2019", "Miete", -500, 0.1, 0.2));
 
             bank.createAccount("Hans", transactions);
@@ -37,17 +35,6 @@ public class Main {
                 System.out.println(e);
             }
 
-
-            // Test amount Exception
-            try {
-                Transfer t = new Transfer("01.01.2019", "Gehalt", -2000, "Herr Mustermann", "Hans");
-            } catch (NumericValueInvalidException e) {
-                System.out.println("-----------------");
-                System.out.println("Test amount Exception");
-                System.out.println(e);
-                System.out.println("-----------------");
-
-            }
             // Test incomingException Exception
             try {
                 PrivateBank b = new PrivateBank("Meine Bank", 0.3, 0.3);

@@ -242,6 +242,28 @@ public class PrivateBankAlt implements Bank {
 
     }
 
+    /**
+     * Deletes an account from the bank (also the persisted file).
+     *
+     * @param account the account to be deleted
+     * @throws AccountDoesNotExistException if the account does not exist
+     * @throws IOException                  if file cannot be deleted or other errors occur during deletion
+     */
+    @Override
+    public void deleteAccount(String account) throws AccountDoesNotExistException, IOException {
+
+    }
+
+    /**
+     * Get all accounts from the bank as a List of Strings
+     *
+     * @return List of Accounts as String
+     */
+    @Override
+    public List<String> getAllAccounts() {
+        return null;
+    }
+
     @Override
     public String toString() {
         String newLine = System.getProperty("line.separator");

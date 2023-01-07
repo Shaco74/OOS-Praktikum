@@ -5,7 +5,7 @@ import bank.exceptions.NumericValueInvalidException;
 /**
  * Transfer objects are used to represent transfers between accounts
  */
-public class Transfer extends Transaction {
+public abstract class Transfer extends Transaction {
     /**
      * The sender of the transfer
      * The recipient of the transfer

@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.*;
 
 public class PrivateBank implements Bank {
@@ -256,6 +257,27 @@ public class PrivateBank implements Bank {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    @Override
+    public void deleteAccount(String account) throws AccountDoesNotExistException, IOException {
+        //accountsToTransactions
+        if(!accountsToTransactions.containsKey(account)){
+            throw new AccountDoesNotExistException();
+        }
+        accountsToTransactions.remove(account);
+        File file = new File("persist/"+directoryName+"/Konto_"+account+".json");
+
+        try {
+            Files.delete(file.toPath());
+        }catch (IOException e) {
+          throw e;
+        }
+    }
+
+    @Override
+    public List<String> getAllAccounts() {
+        return new ArrayList<>(accountsToTransactions.keySet());
     }
 
 

@@ -102,4 +102,18 @@ public interface Bank {
     void writeAccount(String account) throws IOException;
 
     void readAccounts();
+
+    /**
+     * Deletes an account from the bank (also the persisted file).
+     * @param account the account to be deleted
+     * @throws AccountDoesNotExistException if the account does not exist
+     * @throws IOException if file cannot be deleted or other errors occur during deletion
+     */
+    void deleteAccount(String account) throws AccountDoesNotExistException, IOException;
+
+    /**
+     * Get all accounts from the bank as a List of Strings
+     * @return List of Accounts as String
+     */
+    List<String> getAllAccounts();
 }
