@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="620.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AccountViewController">
+   <children>
+      <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Button fx:id="backToHomeBtn" layoutX="21.0" layoutY="18.0" mnemonicParsing="false" onAction="#backToHome" prefHeight="39.0" prefWidth="76.0" text="Zurück" />
+            <Label fx:id="labelAccountOwner" alignment="CENTER" layoutX="345.0" layoutY="14.0" prefHeight="47.0" prefWidth="210.0" text="Account Name" textAlignment="CENTER">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelAccountBalance" layoutX="21.0" layoutY="77.0" prefHeight="47.0" prefWidth="862.0" text="Kontostand: " textFill="#210dff">
+               <font>
+                  <Font name="System Bold Italic" size="30.0" />
+               </font>
+            </Label>
+            <ListView fx:id="transactionsList" layoutX="19.0" layoutY="162.0" prefHeight="444.0" prefWidth="862.0" />
+            <ButtonBar layoutX="21.0" layoutY="124.0" prefHeight="40.0" prefWidth="862.0">
+               <buttons>
+                  <Button fx:id="ascSortBtn" mnemonicParsing="false" onAction="#onAscSortBtn" text="Aufsteigende Sortierung" />
+                  <Button fx:id="descSortBtn" mnemonicParsing="false" onAction="#onDescSortBtn" text="Absteigende Sortierung" />
+                  <Button fx:id="posFilterBtn" mnemonicParsing="false" onAction="#onPosFilterBtn" text="nur positiven amounts" />
+                  <Button fx:id="negFilterBtn" mnemonicParsing="false" onAction="#onNegFilterBtn" text="nur negativen amounts" />
+               </buttons>
+            </ButtonBar>
+            <Button fx:id="addTransactionBtn" layoutX="717.0" layoutY="18.0" mnemonicParsing="false" onAction="#onAddTransactionBtn" prefHeight="39.0" prefWidth="166.0" text="Transaktion Hinzufügen" />
+            <DialogPane fx:id="createTransactionDialog" layoutX="145.0" layoutY="197.0" prefHeight="327.0" prefWidth="655.0" style="-fx-background-color: rgba(223,232,22,1); -fx-border-color: blue; -fx-padding: 5;">
+               <header>
+                  <Label text="Transaktion Hinzufügen">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+               </header>
+               <buttonTypes>
+                  <ButtonType fx:constant="CANCEL" />
+                  <ButtonType fx:constant="OK" />
+               </buttonTypes>
+               <content>
+                  <FlowPane prefHeight="200.0" prefWidth="200.0" vgap="10.0">
+                     <children>
+                        <GridPane alignment="CENTER" gridLinesVisible="true" prefHeight="101.0" prefWidth="653.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="170.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="463.0" minWidth="10.0" prefWidth="463.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="85.0" minHeight="9.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="192.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="192.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Datum" />
+                              <Label text="Beschreibung" GridPane.rowIndex="1" />
+                              <TextField fx:id="transactionDateField" prefHeight="87.0" prefWidth="463.0" GridPane.columnIndex="1" />
+                              <TextField fx:id="transactionDescriptionField" prefHeight="81.0" prefWidth="463.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label text="Geldbetrag" GridPane.rowIndex="2" />
+                              <TextField fx:id="transactionAmountField" prefHeight="87.0" prefWidth="463.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
+                        <CheckBox fx:id="transactionIsPaymentCheckbox" mnemonicParsing="false" onAction="#isPaymentChanged" text="Handelt es sich um eine Ein- oder Auszahlung?" />
+                        <GridPane fx:id="gridSenderReceiver" alignment="CENTER" gridLinesVisible="true" prefHeight="49.0" prefWidth="653.0">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="170.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="463.0" minWidth="10.0" prefWidth="463.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="85.0" minHeight="9.0" prefHeight="51.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="192.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Sender" />
+                              <Label text="Empfänger" GridPane.rowIndex="1" />
+                              <TextField fx:id="transactionSenderField" prefHeight="87.0" prefWidth="463.0" GridPane.columnIndex="1" />
+                              <TextField fx:id="transactionReceiverField" prefHeight="81.0" prefWidth="463.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <GridPane fx:id="gridInterests" alignment="CENTER" gridLinesVisible="true" prefHeight="49.0" prefWidth="653.0">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="170.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="463.0" minWidth="10.0" prefWidth="463.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="85.0" minHeight="9.0" prefHeight="51.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="192.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Incoming Interest" />
+                              <Label text="Outgoing Interest" GridPane.rowIndex="1" />
+                              <TextField fx:id="transactionIncomingInterestField" prefHeight="87.0" prefWidth="463.0" GridPane.columnIndex="1" />
+                              <TextField fx:id="transactionOutgoingInterestField" prefHeight="81.0" prefWidth="463.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </FlowPane>
+               </content>
+            </DialogPane>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

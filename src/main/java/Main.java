@@ -1,10 +1,14 @@
 import bank.*;
 import bank.exceptions.NumericValueInvalidException;
+import javafx.scene.control.Alert;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+
+
+
     public static void main(String[] args) {
         try {
             PrivateBank bank = new PrivateBank("Meine Bank", 0.2, 0.2);

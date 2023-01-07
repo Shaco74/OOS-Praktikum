@@ -81,8 +81,10 @@ public class PrivateBank implements Bank {
         }
 
         if (transaction instanceof Payment payment) {
-            ((Payment) transaction).setIncomingInterest(this.incomingInterest);
-            ((Payment) transaction).setOutgoingInterest(this.outgoingInterest);
+            //((Payment) transaction).setIncomingInterest(this.incomingInterest);
+            //((Payment) transaction).setOutgoingInterest(this.outgoingInterest);
+            ((Payment) transaction).setIncomingInterest(payment.getIncomingInterest());
+            ((Payment) transaction).setOutgoingInterest(payment.getOutgoingInterest());
             accountsToTransactions.get(account).add(transaction);
         } else if (transaction instanceof Transfer transfer) {
             accountsToTransactions.get(account);
@@ -136,10 +138,11 @@ public class PrivateBank implements Bank {
     @Override
     public List<Transaction> getTransactionsSorted(String account, boolean asc) {
         List<Transaction> transactions = new ArrayList<>(getTransactions(account));
-        transactions.sort(Comparator.comparing(t -> String.valueOf(t.calculate())));
 
-        if (!asc) {
-            Collections.reverse(transactions);
+        if (asc) {
+            transactions.sort(Comparator.comparing(Transaction::calculate));
+        } else {
+            transactions.sort(Comparator.comparing(Transaction::calculate).reversed());
         }
 
         return transactions;
@@ -329,7 +332,7 @@ public class PrivateBank implements Bank {
     /**
      * Set the directory name to save/persist files to
      *
-     * @param the directory name
+     * @return void
      */
     public String getDirectoryName() {
         return directoryName;
@@ -338,7 +341,7 @@ public class PrivateBank implements Bank {
     /**
      * Get the directory name to save/persist files to
      *
-     * @return the directory name
+     * @param directoryName the directory name
      */
     public void setDirectoryName(String directoryName) {
         this.directoryName = directoryName;
